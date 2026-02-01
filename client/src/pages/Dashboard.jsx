@@ -8,11 +8,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchAnalytics = async () => {
-      const res = await axios.get('http://localhost:5000/api/orders/analytics/top-sellers');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/orders/analytics/top-sellers');
       setTopSellers(res.data);
     };
     const fetchOrders = async () => {
-        const res = await axios.get('http://localhost:5000/api/orders');
+        const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/orders');
         setOrders(res.data); 
     };
 

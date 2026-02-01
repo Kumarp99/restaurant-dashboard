@@ -9,7 +9,7 @@ const MenuManagement = () => {
   const [loading, setLoading] = useState(false);
   
   // Backend URL
-  const API_URL = 'http://localhost:5000/api/menu';
+  const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/menu';
   
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
@@ -38,7 +38,7 @@ const MenuManagement = () => {
     setMenu(updatedMenu);
 
     try {
-      await axios.patch(`http://localhost:5000/api/menu/${id}/availability`);
+      await axios.patch(`${API_URL}/${id}/availability`);
     } catch (err) {
       setMenu(previousMenuState);
       alert("Failed to update status. Reverting...");
