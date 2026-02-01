@@ -7,13 +7,28 @@ const Dashboard = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    // 1. Function to get Analytics (Top Sellers)
     const fetchAnalytics = async () => {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/orders/analytics/top-sellers');
-      setTopSellers(res.data);
+      try {
+        const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/orders/analytics/top-sellers');
+        // Safety Check: Only update if we got an array
+        setTopSellers(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Analytics Error:", err);
+        setTopSellers([]);
+      }
     };
+
+    // 2. Function to get Orders (THIS WAS MISSING)
     const fetchOrders = async () => {
+      try {
         const res = await axios.get((import.meta.env.VITE_API_URL || 'http://localhost:5000') + '/api/orders');
-        setOrders(res.data); 
+        // Safety Check: Only update if we got an array
+        setOrders(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Orders Error:", err);
+        setOrders([]);
+      }
     };
 
     fetchAnalytics();
